@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <title>Org Chart</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.jOrgChart.js"></script>
+    <script type="text/javascript">
+      jQuery(document).ready(function() {
+        $("#org").jOrgChart();
+      });
+    </script>
+    <style>
+      img, span {
+        clear: left;
+        float: left;
+      }
+      .node {
+        margin: 0 10px;
+        padding: 10px;
+        border: 2px solid #333;
+        background: #CCC;
+        overflow: hidden;
+      }
+      .line.left {
+        border-right: 1px solid #000;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="org" style="display: none;">
+      <li>
+      <img src="http://www.gravatar.com/avatar/4f0d4bb331c8cecc1103a09530faf144?d=mm" />
+        <span class="name">Clinton Bosch</span>
+        <span class="title">Architect</span>
+        <ul>
+          <li>
+            <img src="http://www.gravatar.com/avatar/27be0d219962baf6b5e71d30f75cc9a7?d=mm" />
+            <span class="name">Chris Ritchie</span>
+            <span class="title">Java Developer</span>
+            <ul>
+              <li>
+                <img src="http://www.gravatar.com/avatar/5424688b4ed6dfdc3a8f2ed73769bbbd?d=mm" />
+                <span class="name">Brett Ausmeier</span>
+                <span class="title">Java Developer</span>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <img src="http://www.gravatar.com/avatar/f6e101f416881fb26facadc8a419575c?d=mm" />
+            <span class="name">Terence Foxcroft</span>
+            <span class="title">Java Developer</span>
+            <ul>
+              <li>
+                <img src="http://www.gravatar.com/avatar/fc09310803291be6a4414932d25e56e7?d=mm" />
+                <span class="name">Tiisetso Khalane</span>
+                <span class="title">Java Developer</span>
+              </li>
+              <li>
+                <img src="http://www.gravatar.com/avatar/4828c52eddb31ea6ec5df8e0c57773e3?d=mm" />
+                <span class="name">Rotondwa Ratshidaho</span>
+                <span class="title">Microsoft Developer</span>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </body>
+</html>
