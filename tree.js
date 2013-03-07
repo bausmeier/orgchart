@@ -114,7 +114,7 @@ var update = function(source) {
   nodeEnter
     .append("a")
       .attr("xlink:href", function(d) {
-        return d.link || "#";
+        return d.username ? "https://bsg.myworklife.com/app/#" + d.username : "#";
       })
     .append("text")
       .attr("dx", -nodeWidth / 2 + 100)
