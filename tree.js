@@ -180,6 +180,13 @@ var update = function(source) {
       .attr("x", 0)
       .attr("y", 0);
 
+  nodeExit
+    .selectAll("image")
+      .attr("width", 0)
+      .attr("height", 0)
+      .attr("x", 0)
+      .attr("y", 0);
+
   // Stash the old positions for transition.
   nodes.forEach(function(d) {
     d.x0 = d.x;
