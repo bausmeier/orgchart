@@ -1,19 +1,21 @@
 // Dimensions of the svg
 var width = 960,
-    height = 800;
+    height = 800,
+    nodeWidth = 250
+    nodeHeight = 100;
 
 var head, // The root of the tree
     i = 0; // Index used for id
 
 // 80 padding on either side
-var cluster = d3.layout.cluster().size([height, width - 160]);
+var cluster = d3.layout.cluster().size([height, width - nodeWidth]);
 
 var diagonal = d3.svg.diagonal().projection(function(d) {
   // Left to right tree alignment so switch x and y
   return [d.y, d.x];
 });
 
-var svg = d3.select("body").append("svg").attr("width", width).attr("height", height).append("g").attr("transform", "translate(80,0)");
+var svg = d3.select("body").append("svg").attr("width", width).attr("height", height).append("g").attr("transform", "translate(" + nodeWidth / 2 + ",0)");
 
 // Fetch the data to build the tree
 d3.json("data.json", function(error, root) {
@@ -83,8 +85,6 @@ var update = function(source) {
         return "translate(" + source.y0 + "," + source.x0 + ")";
       })
       .on("click", click);
-  var w = 160,
-      h = 50;
   nodeEnter.append("rect")
       .attr("width", 1e-6)
       .attr("height", 1e-6)
@@ -93,16 +93,18 @@ var update = function(source) {
         return d._children ? "lightsteelblue" : "#fff";
       });
 
+  nodeEnter.append("image").attr("xlink:href", "http://www.gravatar.com/avatar/5424688b4ed6dfdc3a8f2ed73769bbbd?d=mm&f=y").attr("width", 0).attr("height", 0);
+
   nodeEnter.append("text")
+      .attr("dx", -nodeWidth / 2 + 100)
       .attr("dy", -9)
-      .style("text-anchor", "middle")
       .text(function(d) {
         return d.name;
       })
       .style("fill-opacity", 1e-6);
   nodeEnter.append("text")
+      .attr("dx", -nodeWidth / 2 + 100)
       .attr("dy", 9)
-      .style("text-anchor", "middle")
       .text(function(d) {
         return d.position;
       })
@@ -116,13 +118,18 @@ var update = function(source) {
     });
   nodeUpdate.selectAll("text").style("fill-opacity", 1);
   nodeUpdate.selectAll("rect")
-      .attr("width", w)
-      .attr("height", h)
-      .attr("x", -w / 2)
-      .attr("y", -h / 2)
+      .attr("width", nodeWidth)
+      .attr("height", nodeHeight)
+      .attr("x", -nodeWidth / 2)
+      .attr("y", -nodeHeight / 2)
       .style("fill", function(d) {
         return d._children ? "lightsteelblue" : "#fff";
       });
+  nodeUpdate.selectAll("image")
+    .attr("width", 80)
+    .attr("height", 80)
+    .attr("x", -nodeWidth / 2 + 10)
+    .attr("y", -nodeHeight / 2 + 10);
 
   // Node exit
   var nodeExit = node.exit().transition()
