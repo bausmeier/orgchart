@@ -1,21 +1,27 @@
 // Dimensions of the svg
-var width = 960,
-    height = 800,
+var width = 1024,
+    height = 768,
     nodeWidth = 250
     nodeHeight = 100;
 
 var head, // The root of the tree
-    i = 0; // Index used for id
+    i = 0; // Index used for ids
 
 // 80 padding on either side
-var cluster = d3.layout.cluster().size([height, width - nodeWidth]);
+var cluster = d3.layout.cluster()
+                .size([height, width - nodeWidth]);
 
 var diagonal = d3.svg.diagonal().projection(function(d) {
   // Left to right tree alignment so switch x and y
   return [d.y, d.x];
 });
 
-var svg = d3.select("body").append("svg").attr("width", width).attr("height", height).append("g").attr("transform", "translate(" + nodeWidth / 2 + ",0)");
+var svg = d3.select("body")
+            .append("svg")
+              .attr("width", width)
+              .attr("height", height)
+            .append("g")
+              .attr("transform", "translate(" + nodeWidth / 2 + ", 0)");
 
 // Fetch the data to build the tree
 d3.json("data.json", function(error, root) {
@@ -35,35 +41,38 @@ var update = function(source) {
       links = cluster.links(nodes);
 
   // Get all nodes and if they don't already have one give them an id
-  var node = svg.selectAll(".node").data(nodes, function(d) {
-    return d.id || (d.id = ++i);
-  });
+  var node = svg.selectAll(".node")
+    .data(nodes, function(d) {
+      return d.id || (d.id = ++i);
+    });
 
-  var link = svg.selectAll(".link").data(links, function(d) {
-    return d.target.id;
-  });
+  var link = svg.selectAll(".link")
+    .data(links, function(d) {
+      return d.target.id;
+    });
 
   // When a new link is added put it at the source and point it to the source (no length)
-  var linkEnter =  link.enter().append("path").attr("class", "link").attr("d", function(d) {
-    var o = {
-      x: source.x0,
-      y: source.y0
-    };
-    return diagonal({
-      source: o,
-      target: o
-    });
-  });
+  var linkEnter = link.enter()
+    .append("path")
+      .attr("class", "link")
+      .attr("d", function(d) {
+        var o = {
+          x: source.x0,
+          y: source.y0
+        };
+        return diagonal({
+          source: o,
+          target: o
+        });
+      });
 
   // Transistion each link to point from source to target
-  link
-    .transition()
+  link.transition()
     .duration(750)
     .attr("d", diagonal);
 
   // When a link is exited transition it to the source and point it to the source (no length)
-  link
-    .exit()
+  link.exit()
     .transition()
     .duration(750)
     .attr("d", function(d) {
@@ -79,30 +88,44 @@ var update = function(source) {
     .remove();
 
   // Node enter
-  var nodeEnter = node.enter().append("g")
+  var nodeEnter = node.enter()
+    .append("g")
       .attr("class", "node")
       .attr("transform", function(d) {
         return "translate(" + source.y0 + "," + source.x0 + ")";
-      })
-      .on("click", click);
-  nodeEnter.append("rect")
+      });
+
+  nodeEnter
+    .append("rect")
       .attr("width", 1e-6)
       .attr("height", 1e-6)
       .style("fill", function(d) {
         // If d has hidden children style it differently
         return d._children ? "lightsteelblue" : "#fff";
-      });
+      })
+      .on("click", click);
 
-  nodeEnter.append("image").attr("xlink:href", "http://www.gravatar.com/avatar/5424688b4ed6dfdc3a8f2ed73769bbbd?d=mm&f=y").attr("width", 0).attr("height", 0);
+  nodeEnter
+    .append("image")
+      .attr("xlink:href", "http://www.gravatar.com/avatar/5424688b4ed6dfdc3a8f2ed73769bbbd?d=mm&f=y")
+      .attr("width", 0)
+      .attr("height", 0);
 
-  nodeEnter.append("text")
+  nodeEnter
+    .append("a")
+      .attr("xlink:href", function(d) {
+        return d.link || "#";
+      })
+    .append("text")
       .attr("dx", -nodeWidth / 2 + 100)
       .attr("dy", -9)
       .text(function(d) {
         return d.name;
       })
       .style("fill-opacity", 1e-6);
-  nodeEnter.append("text")
+
+  nodeEnter
+    .append("text")
       .attr("dx", -nodeWidth / 2 + 100)
       .attr("dy", 9)
       .text(function(d) {
@@ -116,8 +139,13 @@ var update = function(source) {
     .attr("transform", function(d) {
       return "translate(" + d.y + "," + d.x + ")";
     });
-  nodeUpdate.selectAll("text").style("fill-opacity", 1);
-  nodeUpdate.selectAll("rect")
+
+  nodeUpdate
+    .selectAll("text")
+      .style("fill-opacity", 1);
+
+  nodeUpdate
+    .selectAll("rect")
       .attr("width", nodeWidth)
       .attr("height", nodeHeight)
       .attr("x", -nodeWidth / 2)
@@ -125,11 +153,13 @@ var update = function(source) {
       .style("fill", function(d) {
         return d._children ? "lightsteelblue" : "#fff";
       });
-  nodeUpdate.selectAll("image")
-    .attr("width", 80)
-    .attr("height", 80)
-    .attr("x", -nodeWidth / 2 + 10)
-    .attr("y", -nodeHeight / 2 + 10);
+
+  nodeUpdate
+    .selectAll("image")
+      .attr("width", 80)
+      .attr("height", 80)
+      .attr("x", -nodeWidth / 2 + 10)
+      .attr("y", -nodeHeight / 2 + 10);
 
   // Node exit
   var nodeExit = node.exit().transition()
@@ -138,8 +168,13 @@ var update = function(source) {
       return "translate(" + source.y + "," + source.x + ")";
     })
     .remove();
-  nodeExit.selectAll("text").style("fill-opacity", 1e-6);
-  nodeExit.selectAll("rect")
+
+  nodeExit
+    .selectAll("text")
+      .style("fill-opacity", 1e-6);
+
+  nodeExit
+    .selectAll("rect")
       .attr("width", 1e-6)
       .attr("height", 1e-6)
       .attr("x", 0)
