@@ -18,7 +18,7 @@ var diagonal = d3.svg.diagonal().projection(function(d) {
 });
 
 // Add an svg and a g to body
-var svg = d3.select("body")
+var svg = d3.select("#orgchart")
             .append("svg")
               .attr("width", width)
               .attr("height", height)
