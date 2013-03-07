@@ -230,7 +230,7 @@ var switchRoot = function(d, node) {
           d._children = root && root.children || null;
           d.fetched = true;
           makeHead(d);
-          node.style("fill", "white"); // Hide busy style
+          node.style("fill", "palegreen"); // Hide busy style
         });
       }, 1000);
     }
