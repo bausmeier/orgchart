@@ -29,7 +29,7 @@ var svg = d3.select("body")
 d3.json("data.json", function(error, root) {
   head = root;
   // Align the root vertically
-  root.x0 = height / 4;
+  root.x0 = height / 2;
   root.y0 = 0;
   // Collapse all children
   root.children.forEach(collapse);
