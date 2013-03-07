@@ -1,0 +1,17 @@
+{
+  "children": [
+    {
+      "name": "Chris Ritchie",
+      "username": "chris.ritchie",
+      "position": "Java Developer"
+    },
+    {
+      "name": "Markus Coetzee",
+      "position": "Java Developer"
+    },
+    {
+      "name": "Terence Foxcroft",
+      "position": "Java Developer"
+    }
+  ]
+}

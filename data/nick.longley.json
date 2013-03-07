@@ -1,0 +1,33 @@
+{
+  "children": [
+    {
+      "name": "Alan Hughes",
+      "position": "Java Developer"
+    },
+    {
+      "name": "Brenton Tenner",
+      "position": "Java Developer"
+    },
+    {
+      "name": "Daniel Maree",
+      "position": "Software Project Manager"
+    },
+    {
+      "name": "Eliana Grusch",
+      "position": "Executive PA"
+    },
+    {
+      "name": "Jacqueline Devlin",
+      "position": "Finance and Risk Manager"
+    },
+    {
+      "name": "Clinton Bosch",
+      "username": "clinton.bosch",
+      "position": "Architect"
+    },
+    {
+      "name": "Adriaan Fenwick",
+      "position": "User Interface Designer"
+    }
+  ]
+}

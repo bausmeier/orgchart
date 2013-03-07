@@ -26,7 +26,7 @@ var svg = d3.select("body")
               .attr("transform", "translate(" + nodeWidth / 2 + ", 0)");
 
 // Fetch the data to build the tree
-d3.json("data.json", function(error, root) {
+d3.json("data/greg.reis.json", function(error, root) {
   head = root;
   // Align the root vertically
   root.x0 = height / 2;
@@ -150,7 +150,7 @@ var update = function(source) {
       .attr("x", -nodeWidth / 2)
       .attr("y", -nodeHeight / 2)
       .style("fill", function(d) {
-        return d._children ? "lightsteelblue" : "#fff";
+        return d.fetched ? "palegreen" : "#fff";
       });
 
   nodeUpdate
@@ -194,29 +194,53 @@ var update = function(source) {
 }
 
 var click = function(d) {
-  switchRoot(d);
-  update(d);
+  var node = d3.select(this);
+  switchRoot(d, node);
 }
 
 // Make d the new root and show its children
-var switchRoot = function(d) {
-  if (d !== head && !d._children) {
-    // d has no hidden chidren so do nothing
-    return;
-  }
+var switchRoot = function(d, node) {
   if (d === head) {
     // d is the current head of the tree
     if (d.parent) {
       // d has a parent so make it the head of the tree
       head = d.parent;
       hideChildren(d);
+      update(d);
     }
     return;
+  } else {
+    if (d.fetched) {
+      // Children have been fetched
+      if (d._children) {
+        // There are hidden children
+        makeHead(d);
+      }
+    } else {
+      // Children have not been fetched
+      node.style("fill", "lightblue"); // Show busy style
+      setTimeout(function() {
+        d3.json("data/" + (d.username || "default") + ".json", function(error, root) {
+          if (error) {
+            console.error(error);
+            node.style("fill", "tomato"); // Show error style
+            return;
+          }
+          d._children = root && root.children || null;
+          d.fetched = true;
+          makeHead(d);
+          node.style("fill", "white"); // Hide busy style
+        });
+      }, 1000);
+    }
   }
-  // d is not the head of the tree so make it head and show its children
+}
+
+var makeHead = function(d) {
   d.parent = head;
   showChildren(d);
   head = d;
+  update(d);
 }
 
 // Show the children of d

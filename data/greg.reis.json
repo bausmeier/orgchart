@@ -1,0 +1,27 @@
+{
+  "name": "Greg Reis",
+  "username": "greg.reis",
+  "position": "CEO",
+  "link": "https://bsg.myworklife.com/app/#greg.reis",
+  "fetched": "true",
+  "children": [
+    {
+      "name": "Nick Longley",
+      "username": "nick.longley",
+      "position": "Head of Operations"
+    },
+    {
+      "name": "Gary Stocks",
+      "position": "Head of Strategy"
+    },
+    {
+      "name": "Ian Munro",
+      "username": "ian.munro",
+      "position": "Head: Professional Services"
+    },
+    {
+      "name": "Jurie Schoeman",
+      "position": "Regional Head"
+    }
+  ]
+}
