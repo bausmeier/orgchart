@@ -27,6 +27,7 @@ var svg = d3.select("body")
 
 // Fetch the data to build the tree
 d3.json("data/greg.reis.json", function(error, root) {
+  root.fetched = true;
   head = root;
   // Align the root vertically
   root.x0 = height / 2;
