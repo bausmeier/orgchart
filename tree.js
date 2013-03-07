@@ -201,22 +201,23 @@ var click = function(d) {
 
 // Make d the new root and show its children
 var switchRoot = function(d, node) {
+  // If d is the current head of the tree
   if (d === head) {
-    // d is the current head of the tree
+    // If d has a parent then make the parent head of the tree
     if (d.parent) {
-      // d has a parent so make it the head of the tree
       head = d.parent;
       hideChildren(d);
       update(d);
     }
-    return;
   } else {
     if (d.fetched) {
-      makeHead(d);
+      // Children have been fetched
+      makeRoot(d);
     } else {
       // Children have not been fetched
       node.style("fill", "lightblue"); // Show busy style
       setTimeout(function() {
+        // Fetch the children for d
         d3.json("data/" + (d.username || "default") + ".json", function(error, root) {
           if (error) {
             console.error(error);
@@ -225,7 +226,7 @@ var switchRoot = function(d, node) {
           }
           d._children = root && root.children || null;
           d.fetched = true;
-          makeHead(d);
+          makeRoot(d);
           node.style("fill", "palegreen"); // Hide busy style
         });
       }, 1000);
@@ -233,7 +234,8 @@ var switchRoot = function(d, node) {
   }
 }
 
-var makeHead = function(d) {
+// Make d the head and set its parent
+var makeRoot = function(d) {
   d.parent = head;
   showChildren(d);
   head = d;
