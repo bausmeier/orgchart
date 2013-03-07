@@ -212,11 +212,7 @@ var switchRoot = function(d, node) {
     return;
   } else {
     if (d.fetched) {
-      // Children have been fetched
-      if (d._children) {
-        // There are hidden children
-        makeHead(d);
-      }
+      makeHead(d);
     } else {
       // Children have not been fetched
       node.style("fill", "lightblue"); // Show busy style
