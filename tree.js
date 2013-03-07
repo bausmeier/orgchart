@@ -36,8 +36,9 @@ d3.json("data.json", function(error, root) {
 
 d3.select(self.frameElement).style("height", height + "px");
 
+// Update the tree starting at head
 var update = function(source) {
-  var nodes = cluster.nodes(head).reverse(),
+  var nodes = cluster.nodes(head),
       links = cluster.links(nodes);
 
   // Get all nodes and if they don't already have one give them an id
@@ -161,7 +162,7 @@ var update = function(source) {
       .attr("x", -nodeWidth / 2 + 10)
       .attr("y", -nodeHeight / 2 + 10);
 
-  // Node exit
+  // Each node being removed
   var nodeExit = node.exit().transition()
     .duration(750)
     .attr("transform", function(d) {
@@ -196,7 +197,6 @@ var update = function(source) {
 
 var click = function(d) {
   switchRoot(d);
-  //toggleChildren(d);
   update(d);
 }
 
@@ -219,15 +219,6 @@ var switchRoot = function(d) {
   d.parent = head;
   showChildren(d);
   head = d;
-}
-
-// Toggle the visibility of the children of d
-var toggleChildren = function(d) {
-  if (d.children) {
-    hideChildren(d);
-  } else {
-    showChildren(d);
-  }
 }
 
 // Show the children of d
