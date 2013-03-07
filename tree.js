@@ -53,7 +53,7 @@ var update = function(source) {
 
   // When a new link is added put it at the source and point it to the source (no length)
   var linkEnter = link.enter()
-    .append("path")
+    .insert("path", ":first-child")
       .attr("class", "link")
       .attr("d", function(d) {
         var o = {
@@ -87,7 +87,7 @@ var update = function(source) {
     })
     .remove();
 
-  // Node enter
+  // Each node that is being added
   var nodeEnter = node.enter()
     .append("g")
       .attr("class", "node")
@@ -133,7 +133,7 @@ var update = function(source) {
       })
       .style("fill-opacity", 1e-6);
 
-  // Node update
+  // Each node which is being updated
   var nodeUpdate = node.transition()
     .duration(750)
     .attr("transform", function(d) {
@@ -179,7 +179,6 @@ var update = function(source) {
       .attr("height", 1e-6)
       .attr("x", 0)
       .attr("y", 0);
-
 
   // Stash the old positions for transition.
   nodes.forEach(function(d) {
