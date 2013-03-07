@@ -11,11 +11,13 @@ var head, // The root of the tree
 var cluster = d3.layout.cluster()
                 .size([height, width - nodeWidth]);
 
+// Creates a method which draws a line between the source and target passed to it
 var diagonal = d3.svg.diagonal().projection(function(d) {
   // Left to right tree alignment so switch x and y
   return [d.y, d.x];
 });
 
+// Add an svg and a g to body
 var svg = d3.select("body")
             .append("svg")
               .attr("width", width)
@@ -27,7 +29,7 @@ var svg = d3.select("body")
 d3.json("data.json", function(error, root) {
   head = root;
   // Align the root vertically
-  root.x0 = height / 2;
+  root.x0 = height / 4;
   root.y0 = 0;
   // Collapse all children
   root.children.forEach(collapse);
@@ -57,13 +59,13 @@ var update = function(source) {
     .insert("path", ":first-child")
       .attr("class", "link")
       .attr("d", function(d) {
-        var o = {
+        var source0 = {
           x: source.x0,
           y: source.y0
         };
         return diagonal({
-          source: o,
-          target: o
+          source: source0,
+          target: source0
         });
       });
 
@@ -77,13 +79,9 @@ var update = function(source) {
     .transition()
     .duration(750)
     .attr("d", function(d) {
-      var o = {
-        x: source.x,
-        y: source.y
-      };
       return diagonal({
-        source: o,
-        target: o
+        source: source,
+        target: source
       });
     })
     .remove();
